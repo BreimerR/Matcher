@@ -15,7 +15,7 @@ kotlin {
             // Comment the next section to generate Kotlin/Native library (KLIB) instead of executable file:
             executable("matcher") {
                 // Change to specify fully qualified name of your application's entry point:
-                entryPoint = "matcher.main"
+                entryPoint = "regex.main"
             }
         }
     }

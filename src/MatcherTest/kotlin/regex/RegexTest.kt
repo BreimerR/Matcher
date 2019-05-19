@@ -1,11 +1,11 @@
-package sample.helloworld
+package regex
 
 import kotlin.test.Test
 import kotlin.test.assertTrue
 
 class MatcherTests {
     @Test
-    fun testHello() {
+    fun testRegex() {
 
     }
 }
