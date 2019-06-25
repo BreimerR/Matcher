@@ -1,15 +1,40 @@
 package matcher.sections
 
-import libs.oop.classes.Class
-import libs.oop.classes.StaticClass
+/**TODO
+ * define sections
+ * one or many denoted by +
+ * zero or many section *
+ * alternative sections |
+ * range section -  Item-Item this is dependant of the pattern class i.e regex a-z or 0-9 and other pattern matchers that
+ * could be out there
+ * repetitive section one or many should extend here and also zero or many should extend from here
+ * */
 
-class SectionStatic : StaticClass() {
-    operator fun invoke(): SectionClass {
-        return SectionClass()
+import libs.collections.array.each
+import libs.collections.array.length
+import matcher.TestableClass
+import matcher.TestableStatic
+import matcher.items.ItemsClass
+
+open class SectionStatic : TestableStatic() {
+    open operator fun invoke(vararg item: TestableClass, name: String? = null): SectionClass {
+        return SectionClass(*item, name = name)
     }
 }
 
-class SectionClass : Class<SectionStatic>() {
+/**@description
+ * @param sectionItems  this are the haystacks that want to get from an item order
+ * @param name:String? = null this is the name that we can use to infer a specific
+ * section of a pattern from the matched items
+ * */
+open class SectionClass<T>(vararg sectionItems: TestableClass, name: String? = null) : ItemsClass<T>() {
+    val sections = sectionItems
+
+    override fun test(items: TestableClass): Boolean {
+        for (section in sections) if (!(section test items)) return false
+        return true
+    }
+
     override val self = Section
 }
 
