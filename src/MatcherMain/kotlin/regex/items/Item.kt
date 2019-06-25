@@ -1,19 +1,17 @@
-package regex
+package regex.items
 
 import matcher.TestableClass
-import matcher.items.ItemsClass
+
 import matcher.items.ItemClass as LItemClass
 import matcher.items.ItemStatic as LItemStatic
 
 
-class ItemClass(public val value: Char) : LItemClass<Char>() {
-
-    override infix fun <T> test(items: ItemsClass<T>): Boolean {
-        return this.value == (items.nextItem as ItemClass).value
-    }
-
-
+class ItemClass(override val value: Char) : LItemClass<Char>(value) {
     override val self = Item
+
+    override fun compare(value: Any?): Boolean {
+        return this.value == value
+    }
 }
 
 

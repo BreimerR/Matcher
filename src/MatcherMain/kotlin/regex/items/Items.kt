@@ -1,6 +1,6 @@
-package regex
+package regex.items
 
-import libs.collections.array.each
+
 import libs.text.each
 import matcher.TestableClass
 import matcher.items.ItemsStatic as LItemsStatic
@@ -14,6 +14,16 @@ class ItemsStatic : LItemsStatic<Char>() {
 }
 
 class ItemsClass(val testCase: String) : LItemsClass<Char>() {
+    override fun test(items: matcher.items.ItemsClass<*>): Boolean {
+
+        return false
+    }
+
+
+
+
+
+
 
     override val self = Items
     override var items = arrayOf<ItemClass>()
@@ -25,11 +35,6 @@ class ItemsClass(val testCase: String) : LItemsClass<Char>() {
 
 
     }
-
-    override fun test(items: TestableClass): Boolean {
-        return true
-    }
-
 
 }
 

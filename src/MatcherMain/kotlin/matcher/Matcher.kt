@@ -14,9 +14,9 @@ abstract class MatcherStatic : StaticClass() {
 abstract class MatcherClass<Self : MatcherStatic> : Class<Self>() {
     abstract val sections: Array<out TestableClass>
 
-    infix fun <T> test(items: ItemsClass<T>): Boolean {
-        // if any test fails return an false similar to a cumulative boolean
-        for (section in sections) if (items.hasRemItems) return section test items
+    infix fun test(items: ItemsClass<*>): Boolean {
+        for (section in sections) if (!(section test items)) return false
+        if (items.hasRemItems) return false
         return true
     }
 }
