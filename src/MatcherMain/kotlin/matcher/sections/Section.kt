@@ -26,6 +26,7 @@ open class SectionStatic : TestableStatic() {
  * @param sectionItems  this are the haystacks that want to get from an item order
  * @param name:String? = null this is the name that we can use to infer a specific
  * section of a pattern from the matched items
+ *
  * */
 open class SectionClass(vararg sectionItems: TestableClass, name: String? = null) : TestableClass() {
 
