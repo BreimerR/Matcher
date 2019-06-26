@@ -16,7 +16,9 @@ abstract class MatcherClass<Self : MatcherStatic> : Class<Self>() {
 
     infix fun test(items: ItemsClass<*>): Boolean {
         for (section in sections) if (!(section test items)) return false
-        if (items.hasRemItems) return false
+        if (items.hasRemItems) {
+            return false
+        }
         return true
     }
 }
