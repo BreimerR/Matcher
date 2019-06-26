@@ -15,7 +15,7 @@ import regex.items.Items
 // test not section
 fun main() {
     //
-    val alter = AlternativeSection(Item('a'), Item('b'), Item('c'))
+    val alter = AlternativeSection(Item('a'), Item('b'), Item('c'), Item('m'))
     val reg = Regex(NotSection(alter))
 
     print(reg test Items("m"))

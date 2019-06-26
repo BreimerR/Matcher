@@ -4,8 +4,7 @@ import libs.text.each
 import matcher.MatcherClass
 import matcher.MatcherStatic
 import matcher.TestableClass
-import matcher.sections.Section
-import libs.collections.array.each
+
 
 
 infix fun Char.Is(char: Char): Boolean {

@@ -1,12 +1,13 @@
 package matcher.items
 
 import libs.collections.array.length
-import matcher.TestableClass
-import matcher.TestableStatic
+import libs.oop.classes.Class
+import libs.oop.classes.StaticClass
 
-abstract class ItemsStatic<T> : TestableStatic()
 
-abstract class ItemsClass<T> : TestableClass() {
+abstract class ItemsStatic<T> : StaticClass()
+
+abstract class ItemsClass<T> : Class<ItemsStatic<T>>() {
     abstract val items: Array<out ItemClass<T>>
 
 

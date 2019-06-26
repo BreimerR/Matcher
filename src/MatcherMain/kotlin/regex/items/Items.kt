@@ -14,12 +14,9 @@ class ItemsStatic : LItemsStatic<Char>() {
 }
 
 class ItemsClass(private val testCase: String) : LItemsClass<Char>() {
-    override fun test(items: matcher.items.ItemsClass<*>): Boolean {
-
-        return false
-    }
 
     override val self = Items
+
     override var items = arrayOf<ItemClass>()
 
     init {

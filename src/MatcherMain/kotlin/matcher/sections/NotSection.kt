@@ -14,13 +14,7 @@ class NotSectionStatic : SectionStatic() {
 
         override fun test(items: ItemsClass<*>): Boolean {
             // on finding this fail
-            val test = super.test(items)
-
-            if (test) {
-                println(test)
-                println("about to return false")
-                return false
-            }
+            if (super.test(items)) return false
             // on not finding this succeed
             return true
         }
