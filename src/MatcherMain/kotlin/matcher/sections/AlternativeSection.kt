@@ -1,11 +1,11 @@
 package matcher.sections
 
-import libs.collections.array.length
+
 import matcher.TestableClass
 import matcher.items.ItemsClass
 
 class AlternativeSectionStatic : SectionStatic() {
-    override fun invoke(vararg items: TestableClass, name: String?): AlternativeSectionClass {
+    override operator fun invoke(vararg items: TestableClass, name: String?): AlternativeSectionClass {
         return AlternativeSectionClass(*items, name = name)
     }
 }
@@ -13,7 +13,7 @@ class AlternativeSectionStatic : SectionStatic() {
 val AlternativeSection = AlternativeSectionStatic()
 
 
-class AlternativeSectionClass(vararg items: TestableClass, val name: String? = null) : SectionClass(*items) {
+class AlternativeSectionClass(vararg items: TestableClass, val name: String? = null) : SectionStatic.SectionClass(*items) {
     override val self = AlternativeSection
 
     // we dont want to find the first match but the best case match
@@ -29,9 +29,8 @@ class AlternativeSectionClass(vararg items: TestableClass, val name: String? = n
         var w = 0
 
         for (section in sections) {
-            var test = section test items
-            print(test)
-            if (test) {
+
+            if (section test items) {
                 truths += section
                 if (w < items.i) w = items.i
             }

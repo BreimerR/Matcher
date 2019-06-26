@@ -12,13 +12,29 @@ package matcher.sections
 
 import matcher.TestableClass
 import matcher.TestableStatic
-import matcher.items.ItemClass
 import matcher.items.ItemsClass
-import matcher.items.ItemsStatic
+
 
 open class SectionStatic : TestableStatic() {
     open operator fun invoke(vararg items: TestableClass, name: String? = null): TestableClass {
         return SectionClass(*items, name = name)
+    }
+
+    open class SectionClass(vararg sectionItems: TestableClass, name: String? = null) : TestableClass() {
+
+        protected val sections = sectionItems
+
+        override infix fun test(items: ItemsClass<*>): Boolean {
+
+            for (section in sections) {
+                val test = section test items
+                if (!test) return false
+            }
+            return true
+        }
+
+
+        override val self = Section
     }
 }
 
@@ -28,17 +44,6 @@ open class SectionStatic : TestableStatic() {
  * section of a pattern from the matched items
  *
  * */
-open class SectionClass(vararg sectionItems: TestableClass, name: String? = null) : TestableClass() {
 
-    protected val sections = sectionItems
-
-    override infix fun test(items: ItemsClass<*>): Boolean {
-        for (section in sections) if (!(section test items)) return false
-        return true
-    }
-
-
-    override val self = Section
-}
 
 val Section = SectionStatic()

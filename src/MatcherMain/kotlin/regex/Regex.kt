@@ -6,7 +6,7 @@ import matcher.MatcherStatic
 import matcher.TestableClass
 import matcher.sections.Section
 import libs.collections.array.each
-import matcher.sections.SectionClass
+
 
 
 infix fun Char.Is(char: Char): Boolean {
