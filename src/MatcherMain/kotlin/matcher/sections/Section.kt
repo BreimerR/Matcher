@@ -27,8 +27,7 @@ open class SectionStatic : TestableStatic() {
         override infix fun test(items: ItemsClass<*>): Boolean {
 
             for (section in sections) {
-                val test = section test items
-                if (!test) return false
+                if (!(section test items)) return false
             }
             return true
         }

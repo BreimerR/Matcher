@@ -15,7 +15,6 @@ abstract class MatcherClass<Self : MatcherStatic> : Class<Self>() {
     abstract val sections: Array<out TestableClass>
 
     infix fun test(items: ItemsClass<*>): Boolean {
-        print(sections.size)
         for (section in sections) if (!(section test items)) return false
         if (items.hasRemItems) return false
         return true
