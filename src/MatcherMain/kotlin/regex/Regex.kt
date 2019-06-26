@@ -8,7 +8,6 @@ import matcher.sections.Section
 import libs.collections.array.each
 
 
-
 infix fun Char.Is(char: Char): Boolean {
     return this == char
 }
@@ -17,8 +16,7 @@ class RegexClass(vararg items: TestableClass, flags: String = "g") : MatcherClas
     override val sections = items
 
     infix fun test(case: String): Boolean {
-        // perform a breaker task
-        // breaks the items into relatable items that can be used in a logical test case
+        // grouping and named groups has to be ready for this to be ready
         return false
     }
 
