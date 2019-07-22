@@ -9,31 +9,45 @@ package matcher.sections
  * could be out there
  * repetitive section one or many should extend here and also zero or many should extend from here
  * */
-
-import matcher.TestableClass
 import matcher.TestableStatic
-import matcher.items.ItemsClass
+import matcher.items.ItemClass
+import matcher.items.ItemsStatic
+import matcher.items.ItemsStatic.Class as ItemsClass
 
 
-open class SectionStatic : TestableStatic() {
-    open operator fun invoke(vararg items: TestableClass, name: String? = null): TestableClass {
-        return SectionClass(*items, name = name)
-    }
+abstract class SectionStatic<T> : TestableStatic() {
 
-    open class SectionClass(vararg sectionItems: TestableClass, name: String? = null) : TestableClass() {
+    abstract operator fun invoke(vararg items: TestableStatic.Class<T>, name: String? = null): Class<T>
+
+    abstract class Class<T>(vararg sectionItems: TestableStatic.Class<T>, open val name: String? = null, override val self: SectionStatic<T>) : TestableStatic.Class<T>() {
+
+        lateinit var items: ItemsClass<T>
+
+        var sI = 0
+
+        var eI: Int? = null
+
+        open var results = arrayOf<ItemClass<T>>()
 
         protected val sections = sectionItems
 
-        override infix fun test(items: ItemsClass<*>): Boolean {
+        override infix fun test(items: ItemsClass<T>): Boolean {
+            this.items = items
+
+            this.sI = items.i
 
             for (section in sections) {
-                if (!(section test items)) return false
+                if (!test(section, items)) return false
             }
+
+            this.eI = items.i
+
             return true
         }
 
-
-        override val self = Section
+        inline fun test(test: TestableStatic.Class<T>, case: ItemsStatic.Class<T>): Boolean {
+            return test test case
+        }
     }
 }
 
@@ -41,8 +55,4 @@ open class SectionStatic : TestableStatic() {
  * @param sectionItems  this are the haystacks that want to get from an item order
  * @param name:String? = null this is the name that we can use to infer a specific
  * section of a pattern from the matched items
- *
  * */
-
-
-val Section = SectionStatic()

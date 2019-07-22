@@ -1,15 +1,14 @@
 package matcher.items
 
-import matcher.TestableClass
+
 import matcher.TestableStatic
 
-abstract class ItemClass<T>(open val value: T) : TestableClass() {
-    override fun test(items: ItemsClass<*>): Boolean {
-        if (items.hasRemItems) return this compare (items.nextItem as ItemClass<*>).value
-        return false
+abstract class ItemClass<T>(open val value: T) : TestableStatic.Class<T>() {
+    override fun test(items: ItemsStatic.Class<T>): Boolean {
+        return this compare (items.nextItem)?.value
     }
 
-    abstract infix fun compare(value: Any?): Boolean
+    abstract infix fun compare(value: T?): Boolean
 }
 
 abstract class ItemStatic : TestableStatic()

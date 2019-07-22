@@ -1,33 +1,43 @@
 package matcher.items
 
 import libs.collections.array.length
-import libs.oop.classes.Class
+import libs.oop.classes.Class as SClass
 import libs.oop.classes.StaticClass
 
 
-abstract class ItemsStatic<T> : StaticClass()
+abstract class ItemsStatic<T> : StaticClass() {
 
-abstract class ItemsClass<T> : Class<ItemsStatic<T>>() {
-    abstract val items: Array<out ItemClass<T>>
+    abstract class Class<T>(open val items: Array<out ItemClass<T>>) : SClass<ItemsStatic<T>>() {
+
+        var i = 0
 
 
-    var i = 0
+        var currentItem: ItemClass<T>? = null
 
-    val nextItem: ItemClass<T>?
-        get() {
-            if (hasRemItems) {
-                val res = items[i]
-                i += 1
-                return res
+        val nextItem: ItemClass<T>?
+            get() {
+                if (hasRemItems) {
+                    val res = items[i]
+                    i += 1
+
+                    currentItem = res
+
+                    return res
+                }
+
+                return null
             }
 
-            return null
-        }
+        val hasRemItems: Boolean
+            get () {
+                return items.length != 0 && i < items.length
+            }
 
-    val hasRemItems: Boolean
-        get () {
-            return i < items.length
-        }
+
+        operator fun get(index: Int): ItemClass<T> = items[index]
+
+
+    }
 
 }
 

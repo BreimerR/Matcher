@@ -1,27 +1,25 @@
 package matcher.sections
 
+import matcher.TestableStatic
+import matcher.items.ItemsStatic.Class as ItemsClass
 
-import matcher.TestableClass
-import matcher.items.ItemsClass
 
-class NotSectionStatic : SectionStatic() {
-    override operator fun invoke(vararg items: TestableClass, name: String?): Class {
-        return Class(*items, name = name)
-    }
+abstract class NotSectionStatic<T> : SectionStatic<T>() {
 
-    class Class(vararg items: TestableClass, val name: String? = null) : SectionStatic.SectionClass(*items) {
-        override val self = AlternativeSection
+    abstract class Class<I>(vararg items: TestableStatic.Class<I>, name: String? = null, self: NotSectionStatic<I>) :
+            SectionStatic.Class<I>(*items, name = name, self = self) {
 
-        override fun test(items: ItemsClass<*>): Boolean {
-            // on finding this fail
-            if (super.test(items)) return false
-            // on not finding this succeed
+        // search algo required here to make the loop not linear exactly for performance boost
+        override fun test(items: ItemsClass<I>): Boolean {
+            sections.forEach {
+                if (it test items) return false
+            }
+
             return true
         }
     }
 }
 
-val NotSection = NotSectionStatic()
 
 
 

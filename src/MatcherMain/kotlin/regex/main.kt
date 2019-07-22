@@ -1,24 +1,43 @@
 package regex
 
-import matcher.sections.*
 import regex.items.Item
 import regex.items.Items
+import regex.sections.*
 
-/*fun main() {
-    val reg = Regex("^.*$")
-
-    print("Expect res should be true  res = ")
-    println(reg test "breimer")
-}*/
-
-
-// test not section
 fun main() {
-    //
-    val alter = AlternativeSection(Item('a'), Item('b'), Item('c'), Item('m'))
-    val reg = Regex(NotSection(alter))
 
-    print(reg test Items("m"))
+    val alphabets = arrayOf(
+            Item('a'),
+            Item('b'),
+            Item('c'),
+            Item('d'),
+            Item('e'),
+            Item('f'),
+            Item('g'),
+            Item('h'),
+            Item('i'),
+            Item('j'),
+            Item('k'),
+            Item('l'),
+            Item('m'),
+            Item('n'),
+            Item('o'),
+            Item('p'),
+            Item('q'),
+            Item('r'),
+            Item('s'),
+            Item('t'),
+            Item('u'),
+            Item('v'),
+            Item('w'),
+            Item('x'),
+            Item('y'),
+            Item('z')
+    )
+
+
+    val reg = Regex(NotSection(*alphabets))
+
+    print(reg test Items(readLine() as String))
 
 }
-

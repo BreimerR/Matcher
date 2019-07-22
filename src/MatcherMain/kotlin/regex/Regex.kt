@@ -1,44 +1,27 @@
 package regex
 
 import libs.text.each
-import matcher.MatcherClass
 import matcher.MatcherStatic
-import matcher.TestableClass
-
+import matcher.TestableStatic
+import matcher.TestableStatic.Class as TestableClass
 
 
 infix fun Char.Is(char: Char): Boolean {
     return this == char
 }
 
-class RegexClass(vararg items: TestableClass, flags: String = "g") : MatcherClass<MatcherStatic>() {
-    override val sections = items
-
-    infix fun test(case: String): Boolean {
-        // grouping and named groups has to be ready for this to be ready
-        return false
-    }
-
-
-    override val self = Regex
-
-    /*constructor(pattern: String) : this(*Regex.prepItems(pattern))*/
-
-    infix fun match(case: String): MatchedClass = Matched()
-
-    /*fun addSection(vararg item: SectionClass<ItemClass>) = Unit*/
-
-}
-
-
-class RegexStatic : MatcherStatic() {
+class RegexStatic : MatcherStatic<Char>() {
     // TODO @pattern = "email=([a-zA-Z0-9_]+)(@)([a-zA-Z0-9]*)(\.)(com|org|[a-zA-Z]{3})"
-    operator fun invoke(patternString: String): RegexClass {
+    operator fun invoke(patternString: String): Class {
         // TODO parse expression string
 
-        return RegexClass()
+        return Class()
     }
 
+
+    operator fun invoke(vararg sections: TestableClass<Char>): Class {
+        return Class(*sections)
+    }
 
     fun parsePatternString(string: String) {
         // EXAMPLE :
@@ -47,7 +30,7 @@ class RegexStatic : MatcherStatic() {
 
 
         string.each(true) { it: Char, index: Int ->
-            var i = index
+            val i = index
 
             if (it == '^') {
 
@@ -59,7 +42,6 @@ class RegexStatic : MatcherStatic() {
         }
     }
 
-    operator fun invoke(vararg sections: TestableClass, flags: String = "g"): RegexClass = RegexClass(*sections, flags = flags)
 
     /*operator fun invoke(patternString: String, flags: String = "g"): RegexClass {
 
@@ -91,6 +73,25 @@ class RegexStatic : MatcherStatic() {
      * */
 
     fun parseFlags(flags: String) {
+
+    }
+
+
+    class Class(vararg sections: TestableClass<Char>, flags: String = "g") : MatcherStatic.Class<Char>(*sections) {
+
+        infix fun test(case: String): Boolean {
+            // grouping and named groups has to be ready for this to be ready
+            return false
+        }
+
+
+        override val self = Regex
+
+        /*constructor(pattern: String) : this(*Regex.prepItems(pattern))*/
+
+        infix fun match(case: String): MatchedClass = Matched()
+
+        /*fun addSection(vararg item: SectionClass<ItemClass>) = Unit*/
 
     }
 }

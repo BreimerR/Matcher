@@ -1,31 +1,30 @@
 package regex.items
 
 
-import libs.text.each
-import matcher.TestableClass
+import matcher.items.ItemsStatic.Class  as LItemsClass
 import matcher.items.ItemsStatic as LItemsStatic
-import matcher.items.ItemsClass as LItemsClass
 
 
 class ItemsStatic : LItemsStatic<Char>() {
-    operator fun invoke(testCase: String): ItemsClass {
-        return ItemsClass(testCase)
+    operator fun invoke(testCase: String): Class {
+        return Class(testCase)
     }
-}
 
-class ItemsClass(private val testCase: String) : LItemsClass<Char>() {
+    // avoid using fixed char unicodes to support as many characters as the language it's self
+    fun breaker(string: String): Array<ItemStatic.Class> {
+        var items = arrayOf<ItemStatic.Class>()
 
-    override val self = Items
-
-    override var items = arrayOf<ItemClass>()
-
-    init {
-        // does work of the items breaker
-        testCase.each { it: Char ->
+        string.forEach {
             items += Item(it)
         }
+
+        return items
     }
 
+    class Class(testCase: String) : LItemsClass<Char>(Items.breaker(testCase)) {
+        override val self = Items
+    }
 }
+
 
 val Items = ItemsStatic()

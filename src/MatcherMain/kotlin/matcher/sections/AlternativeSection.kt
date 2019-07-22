@@ -1,31 +1,30 @@
 package matcher.sections
 
 
-import matcher.TestableClass
-import matcher.items.ItemsClass
+import matcher.TestableStatic
+import matcher.items.ItemsStatic.Class as ItemsClass
 
-class AlternativeSectionStatic : SectionStatic() {
-    override operator fun invoke(vararg items: TestableClass, name: String?): Class {
-        return Class(*items, name = name)
-    }
+abstract class AlternativeSectionStatic<T> : SectionStatic<T>() {
 
-
-    class Class(vararg items: TestableClass, val name: String? = null) : SectionStatic.SectionClass(*items) {
-        override val self = AlternativeSection
+    abstract class Class<I>(
+            vararg items: TestableStatic.Class<I>,
+            override val name: String? = null,
+            self: AlternativeSectionStatic<I>) :
+            SectionStatic.Class<I>(*items, name = name, self = self) {
 
         // we dont want to find the first match but the best case match
-        override infix fun test(items: ItemsClass<*>): Boolean {
+        override infix fun test(items: ItemsClass<I>): Boolean {
             return test(items, sections)
         }
 
-        private fun test(items: ItemsClass<*>, sections: Array<out TestableClass>): Boolean {
+        protected fun test(items: ItemsClass<I>, sections: Array<out TestableStatic.Class<I>>): Boolean {
             val i = items.i
 
             var w = 0
 
             var fI = i
 
-            for (section in sections) {
+            sections.forEach { section->
                 val test = section test items
                 fI = items.i
                 if (test) {
@@ -34,7 +33,6 @@ class AlternativeSectionStatic : SectionStatic() {
 
                 items.i = i
             }
-
 
             return when {
                 w == 0 -> {
@@ -48,12 +46,8 @@ class AlternativeSectionStatic : SectionStatic() {
                 else -> false
             }
         }
-
-
     }
 }
-
-val AlternativeSection = AlternativeSectionStatic()
 
 
 
